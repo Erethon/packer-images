@@ -1,0 +1,59 @@
+{
+  "variables": {
+    "build_id": "{{timestamp}}",
+    "build_name": "packer-debian10-qemu-kvm",
+    "disk_size": "10240",
+    "iso_checksum": "23237b0a100a860b3dc7ffcfb5baae4bed5460ac5f3f2b929df3154f3319b9809055b695264586f60289cc6cb25077c12938cc612fee01756bfa779c87d5a315",
+    "iso_checksum_type": "sha512",
+    "iso_name": "debian-10.1.0-amd64-netinst.iso",
+    "local_domain": "debian.example.com",
+    "local_mirror_url": "http://localhost",
+    "output_dir": "output",
+    "remote_mirror_url": "https://cdimage.debian.org/debian-cd/10.1.0/amd64/iso-cd/"
+  },
+
+  "builders": [
+    {
+      "accelerator": "kvm",
+      "boot_command": [
+        "<esc><wait>",
+        "auto <wait>",
+        "console-keymaps-at/keymap=us <wait>",
+        "console-setup/ask_detect=false <wait>",
+        "debconf/frontend=noninteractive <wait>",
+        "debian-installer=en_US <wait>",
+        "fb=false <wait>",
+        "install <wait>",
+        "kbd-chooser/method=us <wait>",
+        "keyboard-configuration/xkb-keymap=us <wait>",
+        "locale=en_US <wait>",
+        "netcfg/get_domain={{ user `local_domain` }} <wait>",
+        "netcfg/get_hostname={{ .Name }} <wait>",
+        "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg <wait>",
+        "<enter><wait>"
+      ],
+      "boot_wait": "5s",
+      "disk_size": "{{ user `disk_size` }}",
+      "format": "qcow2",
+      "headless": true,
+      "http_directory": "http",
+      "iso_checksum": "{{ user `iso_checksum` }}",
+      "iso_checksum_type": "{{ user `iso_checksum_type` }}",
+      "iso_urls": [
+        "{{ user `local_mirror_url` }}/{{ user `iso_name` }}",
+        "{{ user `remote_mirror_url` }}/{{ user `iso_name` }}"
+      ],
+      "output_directory": "{{ user `output_dir` }}/{{ user `build_name` }}-qemu-{{ user `build_id` }}",
+      "qemuargs": [
+          [ "-m", "1024M" ]
+      ],
+      "shutdown_command": "/usr/sbin/shutdown -P now",
+      "ssh_password": "root",
+      "ssh_port": 22,
+      "ssh_username": "root",
+      "ssh_timeout": "1800s",
+      "type": "qemu",
+      "vm_name": "{{ user `build_name` }}-{{ user `build_id` }}"
+    }
+  ]
+}
