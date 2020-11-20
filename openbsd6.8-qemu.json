@@ -1,0 +1,46 @@
+{
+  "variables": {
+    "build_id": "{{timestamp}}",
+    "build_name": "packer-openbsd6.8-qemu-kvm",
+    "disk_size": "10240",
+    "iso_checksum": "47e291fcc2d0c1a8ae0b66329f040b33af755b6adbd21739e20bb5ad56f62b6c",
+    "iso_checksum_type": "sha256",
+    "iso_name": "install68.iso",
+    "local_mirror_url": "http://localhost",
+    "output_dir": "output",
+    "remote_mirror_url": "https://cdn.openbsd.org/pub/OpenBSD/6.8/amd64/"
+  },
+
+  "builders": [
+    {
+      "accelerator": "kvm",
+      "boot_command": [
+        "A<enter><wait>",
+        "http://{{ .HTTPIP }}:{{ .HTTPPort }}/install.conf<enter><wait>",
+        "I<enter><wait>"
+      ],
+      "boot_wait": "30s",
+      "disk_size": "{{ user `disk_size` }}",
+      "format": "qcow2",
+      "headless": true,
+      "http_directory": "http",
+      "iso_checksum": "{{ user `iso_checksum` }}",
+      "iso_checksum_type": "{{ user `iso_checksum_type` }}",
+      "iso_urls": [
+        "{{ user `local_mirror_url` }}/{{ user `iso_name` }}",
+        "{{ user `remote_mirror_url` }}/{{ user `iso_name` }}"
+      ],
+      "output_directory": "{{ user `output_dir` }}/{{ user `build_name` }}-qemu-{{ user `build_id` }}",
+      "qemuargs": [
+          [ "-m", "1024M" ]
+      ],
+      "shutdown_command": "shutdown -p now",
+      "ssh_password": "root",
+      "ssh_port": 22,
+      "ssh_username": "root",
+      "ssh_timeout": "1800s",
+      "type": "qemu",
+      "vm_name": "{{ user `build_name` }}-{{ user `build_id` }}"
+    }
+  ]
+}
