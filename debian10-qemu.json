@@ -3,13 +3,13 @@
     "build_id": "{{timestamp}}",
     "build_name": "packer-debian10-qemu-kvm",
     "disk_size": "10240",
-    "iso_checksum": "23237b0a100a860b3dc7ffcfb5baae4bed5460ac5f3f2b929df3154f3319b9809055b695264586f60289cc6cb25077c12938cc612fee01756bfa779c87d5a315",
+    "iso_checksum": "cb74dcb7f3816da4967c727839bdaa5efb2f912cab224279f4a31f0c9e35f79621b32afe390195d5e142d66cedc03d42f48874eba76eae23d1fac22d618cb669",
     "iso_checksum_type": "sha512",
-    "iso_name": "debian-10.1.0-amd64-netinst.iso",
+    "iso_name": "debian-10.6.0-amd64-netinst.iso",
     "local_domain": "debian.example.com",
     "local_mirror_url": "http://localhost",
     "output_dir": "output",
-    "remote_mirror_url": "https://cdimage.debian.org/debian-cd/10.1.0/amd64/iso-cd/"
+    "remote_mirror_url": "https://cdimage.debian.org/debian-cd/10.6.0/amd64/iso-cd/"
   },
 
   "builders": [
