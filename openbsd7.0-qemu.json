@@ -1,0 +1,45 @@
+{
+  "variables": {
+    "build_id": "{{timestamp}}",
+    "build_name": "packer-openbsd7.0-qemu-kvm",
+    "disk_size": "10240",
+    "iso_checksum": "1882f9a23c9800e5dba3dbd2cf0126f552605c915433ef4c5bb672610a4ca3a4",
+    "iso_checksum_type": "sha256",
+    "iso_name": "install70.iso",
+    "local_mirror_url": "http://localhost",
+    "output_dir": "output",
+    "remote_mirror_url": "https://cdn.openbsd.org/pub/OpenBSD/7.0/amd64"
+  },
+
+  "builders": [
+    {
+      "accelerator": "kvm",
+      "boot_command": [
+        "A<enter><wait>",
+        "http://{{ .HTTPIP }}:{{ .HTTPPort }}/install.conf<enter><wait>",
+        "I<enter><wait>"
+      ],
+      "boot_wait": "30s",
+      "disk_size": "{{ user `disk_size` }}",
+      "format": "qcow2",
+      "headless": true,
+      "http_directory": "http",
+      "iso_checksum": "{{ user `iso_checksum_type` }}:{{ user `iso_checksum` }}",
+      "iso_urls": [
+        "{{ user `local_mirror_url` }}/{{ user `iso_name` }}",
+        "{{ user `remote_mirror_url` }}/{{ user `iso_name` }}"
+      ],
+      "output_directory": "{{ user `output_dir` }}/{{ user `build_name` }}-qemu-{{ user `build_id` }}",
+      "qemuargs": [
+          [ "-m", "1024M" ]
+      ],
+      "shutdown_command": "shutdown -p now",
+      "ssh_password": "root",
+      "ssh_port": 22,
+      "ssh_username": "root",
+      "ssh_timeout": "1800s",
+      "type": "qemu",
+      "vm_name": "{{ user `build_name` }}-{{ user `build_id` }}"
+    }
+  ]
+}
