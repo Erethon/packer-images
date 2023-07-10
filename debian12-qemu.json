@@ -1,0 +1,61 @@
+{
+  "builders": [
+    {
+      "accelerator": "kvm",
+      "boot_command": [
+        "<esc><wait>",
+        "auto <wait>",
+        "console-keymaps-at/keymap=us <wait>",
+        "console-setup/ask_detect=false <wait>",
+        "debconf/frontend=noninteractive <wait>",
+        "debian-installer=en_US <wait>",
+        "fb=false <wait>",
+        "install <wait>",
+        "kbd-chooser/method=us <wait>",
+        "keyboard-configuration/xkb-keymap=us <wait>",
+        "locale=en_US <wait>",
+        "netcfg/get_domain={{ user `local_domain` }} <wait>",
+        "netcfg/get_hostname={{ .Name }} <wait>",
+        "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg <wait>",
+        "<enter><wait>"
+      ],
+      "boot_wait": "5s",
+      "disk_size": "{{ user `disk_size` }}",
+      "format": "qcow2",
+      "headless": true,
+      "http_directory": "http",
+      "iso_checksum": "{{ user `iso_checksum_type` }}:{{ user `iso_checksum` }}",
+      "iso_urls": [
+        "{{ user `local_mirror_url` }}/{{ user `iso_name` }}",
+        "{{ user `remote_mirror_url` }}/{{ user `iso_name` }}"
+      ],
+      "output_directory": "{{ user `output_dir` }}/{{ user `build_name` }}-qemu-{{ user `build_id` }}",
+      "qemuargs": [
+        [
+          "-m",
+          "1024M"
+        ]
+      ],
+      "shutdown_command": "/usr/sbin/shutdown -P now",
+      "ssh_password": "root",
+      "ssh_port": 22,
+      "ssh_timeout": "1800s",
+      "ssh_username": "root",
+      "type": "qemu",
+      "vm_name": "{{ user `build_name` }}-{{ user `build_id` }}"
+    }
+  ],
+  "variables": {
+    "build_id": "{{timestamp}}",
+    "build_name": "packer-debian12-qemu-kvm",
+    "disk_size": "10240",
+    "iso_checksum": "b462643a7a1b51222cd4a569dad6051f897e815d10aa7e42b68adc8d340932d861744b5ea14794daa5cc0ccfa48c51d248eda63f150f8845e8055d0a5d7e58e6",
+    "iso_checksum_type": "sha512",
+    "iso_name": "debian-12.0.0-amd64-netinst.iso",
+    "local_domain": "debian.example.com",
+    "local_mirror_url": "http://localhost",
+    "output_dir": "output",
+    "remote_mirror_url": "https://cdimage.debian.org/debian-cd/12.0.0/amd64/iso-cd"
+  }
+}
+
