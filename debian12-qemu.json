@@ -49,13 +49,13 @@
     "build_id": "{{timestamp}}",
     "build_name": "packer-debian12-qemu-kvm",
     "disk_size": "10240",
-    "iso_checksum": "b462643a7a1b51222cd4a569dad6051f897e815d10aa7e42b68adc8d340932d861744b5ea14794daa5cc0ccfa48c51d248eda63f150f8845e8055d0a5d7e58e6",
+    "iso_checksum": "11d733d626d1c7d3b20cfcccc516caff2cbc57c81769d56434aab958d4d9b3af59106bc0796252aeefede8353e2582378e08c65e35a36769d5cf673c5444f80e",
     "iso_checksum_type": "sha512",
-    "iso_name": "debian-12.0.0-amd64-netinst.iso",
+    "iso_name": "debian-12.2.0-amd64-netinst.iso",
     "local_domain": "debian.example.com",
     "local_mirror_url": "http://localhost",
     "output_dir": "output",
-    "remote_mirror_url": "https://cdimage.debian.org/debian-cd/12.0.0/amd64/iso-cd"
+    "remote_mirror_url": "https://cdimage.debian.org/debian-cd/12.2.0/amd64/iso-cd"
   }
 }
 
